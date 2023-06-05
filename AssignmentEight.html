@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bike Rental Company</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta name="author" content="Pushparaj Mehta" />
+    <style>
+      /* Custom styles*/
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .navbar {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .navbar-nav .nav-link {
+        color: #fff;
+      }
+
+      .navbar-toggler {
+        border-color: #fff;
+      }
+
+      /* Custom style for login modal */
+      #loginModal .modal-content {
+        border-radius: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
+      <div class="container">
+        <!-- Logo-->
+        <a class="navbar-brand" href="#">Bike Rental Company</a>
+
+        <!-- Navbar toggler button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation menu -->
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#home" onclick="closeNavbar()">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#bikes" onclick="closeNavbar()"
+                >Bikes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#locations" onclick="closeNavbar()"
+                >Locations</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-toggle="modal"
+                data-target="#loginModal"
+                onclick="closeNavbar()"
+                >Login</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  placeholder="Enter email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  placeholder="Enter password"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <p>
+              Don't have an account?
+              <a
+                href="#"
+                data-dismiss="modal"
+                data-toggle="modal"
+                data-target="#signupModal"
+                >Sign up</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Sign Up</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="signupForm">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="signupEmail"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="signupPassword"
+                  placeholder="Enter a password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div id="home" style="height: 100dvh; background-color: #f2f2f2">
+      <h1>Home</h1>
+      <div class="container">
+        <ul class="nav nav-tabs" id="homeTabs" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              id="description-tab"
+              data-toggle="tab"
+              href="#description"
+              role="tab"
+              aria-controls="description"
+              aria-selected="true"
+              >Description</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="features-tab"
+              data-toggle="tab"
+              href="#features"
+              role="tab"
+              aria-controls="features"
+              aria-selected="false"
+              >Features</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="pricing-tab"
+              data-toggle="tab"
+              href="#pricing"
+              role="tab"
+              aria-controls="pricing"
+              aria-selected="false"
+              >Pricing</a
+            >
+          </li>
+        </ul>
+        <div class="tab-content" id="homeTabsContent">
+          <div
+            class="tab-pane fade show active"
+            id="description"
+            role="tabpanel"
+            aria-labelledby="description-tab"
+          >
+            <p>
+              Welcome to Bike Rental Company, your premier destination for bike
+              rentals and adventures. Located in the heart of rajkot, we offer a
+              wide range of high-quality bicycles for individuals and groups of
+              all ages and skill levels. Whether you're a local looking for a
+              fun way to explore your city or a tourist seeking an unforgettable
+              biking experience, we have the perfect bike for you. Our fleet
+              features a variety of models, including mountain bikes, city
+              cruisers, electric bikes, and more, ensuring that you'll find the
+              ideal ride for your needs. With our well-maintained bikes and
+              extensive knowledge of the area, you can trust us to provide a
+              safe, enjoyable, and personalized biking experience. Discover the
+              beauty of rajkot on two wheels with Bike Rental Company!
+            </p>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="popover"
+              data-trigger="focus"
+              data-placement="right"
+              title="Bike Description"
+              data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit, massa a luctus vestibulum, enim mi finibus erat, nec lobortis ligula lectus sed lectus. Nam consectetur luctus vestibulum. Morbi accumsan rutrum mauris id malesuada. Nunc fringilla dui ac mi ullamcorper, sed laoreet nulla efficitur."
+            >
+              View Description
+            </button>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="features"
+            role="tabpanel"
+            aria-labelledby="features-tab"
+          >
+            <ul>
+              <li>
+                Bike Selection and Availability: Provide a user-friendly
+                interface where customers can view the available bikes, their
+                specifications, and rental rates. Include high-quality images,
+                detailed descriptions, and any additional features or
+                accessories that come with each bike. Make it easy for customers
+                to check the availability of bikes for their desired dates and
+                locations.
+              </li>
+              <li>
+                Online Reservation and Booking: Allow customers to book bikes
+                directly through your website. Provide a booking form where
+                users can select the desired bike, rental dates, and
+                pickup/drop-off locations. Implement a secure online payment
+                system to enable customers to complete the booking process
+                smoothly. Send confirmation emails or SMS notifications to
+                customers to ensure a seamless rental experience.
+              </li>
+              <li>
+                User Reviews and Ratings: Incorporate a feature that enables
+                customers to leave reviews and ratings for bikes they have
+                rented. This can help build trust and credibility for your
+                rental service. Display customer reviews prominently on your
+                website to showcase positive experiences and assist potential
+                customers in making informed decisions. Consider implementing a
+                rating system to highlight popular or highly recommended bikes.
+              </li>
+            </ul>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="pricing"
+            role="tabpanel"
+            aria-labelledby="pricing-tab"
+          >
+            <p>
+              At Bike Rental Company, we believe in providing affordable and
+              flexible options to meet all your biking needs. Our pricing
+              structure is designed to ensure that you get the best value for
+              your money, whether you're renting for a few hours or an extended
+              period. We offer competitive rates starting as low as [Price] for
+              [Duration]. We also provide discounted rates for longer-term
+              rentals, allowing you to explore the city or enjoy a leisurely
+              ride without breaking the bank. Additionally, we offer a range of
+              accessories, such as helmets and locks, at no extra cost to
+              enhance your biking experience. We strive to make renting a bike
+              with us a hassle-free and budget-friendly choice for locals and
+              tourists alike.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="bikes" style="height: 100dvh; background-color: #e6e6e6">
+      <h1>Bikes</h1>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img
+              src="https://images.pexels.com/photos/104842/bmw-vehicle-ride-bike-104842.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="Bike"
+              class="img-fluid"
+            />
+          </div>
+          <div class="col-md-8">
+            <h3>Bullet</h3>
+            <p>
+              Introducing the legendary Bullet Bike, an icon of power, style,
+              and adventure. Designed to command attention and deliver an
+              exhilarating ride, our Bullet Bike combines timeless design with
+              cutting-edge engineering. With its robust construction, powerful
+              engine, and unmatched performance, this two-wheeled beast is ready
+              to conquer any terrain. Whether you're cruising through city
+              streets or embarking on a thrilling off-road expedition, the
+              Bullet Bike offers the perfect blend of agility, durability, and
+              raw power. Immerse yourself in the thrill of the open road as you
+              experience the sheer joy of riding this classic machine. From its
+              distinctive silhouette to the thunderous sound of the engine,
+              every aspect of the Bullet Bike exudes a sense of freedom and
+              adventure. Get ready to unleash your inner rider and make a
+              statement with the legendary Bullet Bike.
+            </p>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="popover"
+              data-trigger="focus"
+              data-placement="right"
+              title="Bike Description"
+              data-content="Discover the Bullet Bike, a small wonder that packs a punch. Designed to conquer the city streets with ease, this compact marvel offers a thrilling ride like no other. Its sleek and agile design allows for swift navigation through tight spaces, making it the perfect companion for urban explorers. Don't let its size fool you - beneath its compact frame lies a powerful engine that delivers impressive performance. Whether you're commuting to work or seeking adventure in the concrete jungle, the Bullet Bike is your ticket to an exciting and unforgettable journey. Experience the freedom and excitement of this small yet mighty ride today."
+            >
+              View Description
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locations -->
+    <div id="locations" style="height: 100dvh; background-color: #cccccc">
+      <h1>Locations</h1>
+      <div class="container">
+        <div
+          class="toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          data-bs-autohide="true"
+          data-bs-delay="3000"
+        >
+          <div class="toast-header">
+            <strong class="me-auto">Toast Notification</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="toast-body">This is a toast notification.</div>
+        </div>
+
+        <button
+          class="btn btn-primary mt-3"
+          type="button"
+          onclick="showToast()"
+        >
+          Show Toast
+        </button>
+
+        <!-- Offcanvas -->
+        <button
+          class="btn btn-primary mt-3"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#locationOffcanvas"
+          aria-controls="locationOffcanvas"
+          onclick="toggleOffcanvas()"
+        >
+          Open Location Offcanvas
+        </button>
+
+        <div
+          class="offcanvas offcanvas-start"
+          tabindex="-1"
+          id="locationOffcanvas"
+          aria-labelledby="locationOffcanvasLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="locationOffcanvasLabel">
+              Location Offcanvas
+            </h5>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <p>This is the location offcanvas content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Close the navbar when a navigation link is clicked
+      function closeNavbar() {
+        $(".navbar-collapse").collapse("hide");
+      }
+
+      // Initialize popovers
+      $(function () {
+        $('[data-toggle="popover"]').popover();
+      });
+
+      // Initialize toasts
+      $(function () {
+        $('[data-bs-toggle="toast"]').toast();
+      });
+
+      // Show toast notification
+      function showToast() {
+        $(".toast").toast("show");
+      }
+
+      // Toggle offcanvas in location section
+      function toggleOffcanvas() {
+        var offcanvas = new bootstrap.Offcanvas(
+          document.getElementById("locationOffcanvas")
+        );
+        offcanvas.toggle();
+      }
+    </script>
+  </body>
+</html>

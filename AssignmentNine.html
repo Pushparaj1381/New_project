@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>String Manipulation with JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      input[type="text"],
+      #result {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        border-radius: 5px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>String Manipulation with JavaScript</h1>
+      <input type="text" id="inputField" placeholder="Enter a string" />
+      <div class="button">
+        <button onclick="manipulateString()">Manipulate</button>
+        <button onclick="changeTextColor()">Change Text Color</button>
+        <button onclick="changeBackgroundColor()">
+          Change Background Color
+        </button>
+      </div>
+      <div id="result" class="result"></div>
+      <button onclick="resetOutput()">Reset Output</button>
+    </div>
+
+    <script>
+      function manipulateString() {
+        var input = document.getElementById("inputField").value;
+        var manipulatedString = "";
+
+        // Convert to uppercase
+        manipulatedString = input.toUpperCase();
+
+        // Extract first and last characters
+        var firstCharacter = manipulatedString.charAt(0);
+        var lastCharacter = manipulatedString.charAt(
+          manipulatedString.length - 1
+        );
+
+        // Reverse the order of characters
+        manipulatedString = manipulatedString.split("").reverse().join("");
+
+        // Concatenate manipulated string with additional text
+        manipulatedString += " manipulated!";
+
+        // Update the content of the target element
+        var targetElement = document.getElementById("result");
+        targetElement.textContent =
+          "First character: " +
+          firstCharacter +
+          ", Last character: " +
+          lastCharacter +
+          ", Manipulated string: " +
+          manipulatedString;
+      }
+
+      function changeTextColor() {
+        var targetElement = document.getElementById("result");
+        targetElement.style.color = "red";
+      }
+
+      function changeBackgroundColor() {
+        var targetElement = document.getElementById("result");
+        targetElement.style.backgroundColor = "blue";
+      }
+
+      function resetOutput() {
+        var targetElement = document.getElementById("result");
+        targetElement.textContent = "";
+        targetElement.style.color = "";
+        targetElement.style.backgroundColor = "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      .calculator {
+        width: 300px;
+        padding: 10px;
+        background-color: #363636;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: 0 auto;
+      }
+
+      #optionHeading {
+        font-size: 22px;
+        color: #1e90ff;
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+      .calculator input {
+        width: 90%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 24px;
+        text-align: right;
+        border: none;
+        background-color: #d6d6d6;
+        color: #363636;
+        border-radius: 5px;
+      }
+
+      .calculator button {
+        width: 30%;
+        height: 40px;
+        padding: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+      }
+
+      /* Custom Styles */
+
+      .calculator button.operator {
+        background-color: #e65037;
+        color: #ffffff;
+      }
+
+      .calculator button.operator:hover {
+        background-color: #c43e29;
+      }
+
+      .calculator button.delete {
+        background-color: #eb8934;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+
+      .calculator button.delete:hover {
+        background-color: #d77631;
+      }
+
+      .calculator button.equals {
+        background-color: #009f4d;
+        color: #ffffff;
+      }
+
+      .calculator button.equals:hover {
+        background-color: #007d3b;
+      }
+
+      /* Customized Styles */
+
+      h1 {
+        text-align: center;
+        font-family: "Arial Black", sans-serif;
+        color: #363636;
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+
+      .calculator button {
+        background-color: #1e90ff;
+        color: #ffffff;
+        width: 100%;
+      }
+
+      .calculator button:hover {
+        background-color: #4169e1;
+      }
+
+      .calculator select {
+        width: 90%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        border: none;
+        background-color: #d6d6d6;
+        color: #363636;
+        border-radius: 5px;
+      }
+
+      /* Added Styles for Button Columns */
+      .calculator .conversion {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .calculator .button-column {
+        display: inline-block;
+        width: 30%;
+        margin-right: 2%;
+        margin-bottom: 5px;
+      }
+
+      /* Clear Float */
+      .calculator::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="calc">
+      <header>
+        <h1>Calculate with Confidence</h1>
+      </header>
+      <div class="calculator">
+        <div class="conversion">
+          <div class="from">
+            <h5 id="optionHeading">convert from</h5>
+            <select
+              id="fromNumberSystem"
+              onchange="updateToNumberSystemOptions()"
+            >
+              <option value="decimal">Decimal</option>
+              <option value="binary">Binary</option>
+              <option value="octal">Octal</option>
+              <option value="hexadecimal">Hexadecimal</option>
+            </select>
+          </div>
+          <div class="to">
+            <h5 id="optionHeading">convert to</h5>
+            <select id="toNumberSystem"></select>
+          </div>
+        </div>
+        <input type="text" id="result" readonly />
+        <div class="button-column">
+          <button onclick="appendValue('7')">7</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('8')">8</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('9')">9</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('4')">4</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('5')">5</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('6')">6</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('1')">1</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('2')">2</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('3')">3</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('0')">0</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('.')">.</button>
+        </div>
+        <div class="button-column">
+          <button onclick="clearResult()">C</button>
+        </div>
+        <div class="button-column">
+          <button onclick="deleteLastCharacter()" class="delete">
+            &#9003;
+          </button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('+')" class="operator">+</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('-')" class="operator">-</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('*')" class="operator">*</button>
+        </div>
+        <div class="button-column">
+          <button onclick="appendValue('/')" class="operator">/</button>
+        </div>
+        <div class="button-column">
+          <button onclick="calculate()" class="equals">=</button>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Function to handle keyboard events
+      document.onkeydown = function (event) {
+        var key = event.key;
+        switch (key) {
+          case "0":
+            appendValue("0");
+            break;
+          case "1":
+            appendValue("1");
+            break;
+          case "2":
+            appendValue("2");
+            break;
+          case "3":
+            appendValue("3");
+            break;
+          case "4":
+            appendValue("4");
+            break;
+          case "5":
+            appendValue("5");
+            break;
+          case "6":
+            appendValue("6");
+            break;
+          case "7":
+            appendValue("7");
+            break;
+          case "8":
+            appendValue("8");
+            break;
+          case "9":
+            appendValue("9");
+            break;
+          case ".":
+            appendValue(".");
+            break;
+          case "+":
+            appendValue("+");
+            break;
+          case "-":
+            appendValue("-");
+            break;
+          case "*":
+            appendValue("*");
+            break;
+          case "/":
+            appendValue("/");
+            break;
+          case "Backspace":
+            deleteLastCharacter();
+            break;
+          case "Delete":
+            clearResult();
+            break;
+          case "Enter":
+            calculate();
+            break;
+        }
+      };
+
+      // Calculator functions
+      function updateToNumberSystemOptions() {
+        var fromNumberSystem =
+          document.getElementById("fromNumberSystem").value;
+        var toNumberSystem = document.getElementById("toNumberSystem");
+        var options = "";
+
+        switch (fromNumberSystem) {
+          case "decimal":
+            options += "<option value='binary'>Binary</option>";
+            options += "<option value='octal'>Octal</option>";
+            options += "<option value='hexadecimal'>Hexadecimal</option>";
+            break;
+          case "binary":
+            options += "<option value='decimal'>Decimal</option>";
+            options += "<option value='octal'>Octal</option>";
+            options += "<option value='hexadecimal'>Hexadecimal</option>";
+            break;
+          case "octal":
+            options += "<option value='decimal'>Decimal</option>";
+            options += "<option value='binary'>Binary</option>";
+            options += "<option value='hexadecimal'>Hexadecimal</option>";
+            break;
+          case "hexadecimal":
+            options += "<option value='decimal'>Decimal</option>";
+            options += "<option value='binary'>Binary</option>";
+            options += "<option value='octal'>Octal</option>";
+            break;
+        }
+
+        toNumberSystem.innerHTML = options;
+      }
+
+      function appendValue(value) {
+        document.getElementById("result").value += value;
+      }
+
+      function deleteLastCharacter() {
+        var result = document.getElementById("result").value;
+        document.getElementById("result").value = result.slice(0, -1);
+      }
+
+      function clearResult() {
+        document.getElementById("result").value = "";
+      }
+
+      function calculate() {
+        var inputValue = document.getElementById("result").value;
+        var result = eval(inputValue); // Using eval() to evaluate the arithmetic expression
+
+        document.getElementById("result").value = result;
+
+        var fromNumberSystem =
+          document.getElementById("fromNumberSystem").value;
+        var toNumberSystem = document.getElementById("toNumberSystem").value;
+        var inputValue = document.getElementById("result").value;
+        var result;
+
+        if (fromNumberSystem === "decimal") {
+          switch (toNumberSystem) {
+            case "binary":
+              result = convertToBinary(parseInt(inputValue, 10));
+              break;
+            case "octal":
+              result = convertToOctal(parseInt(inputValue, 10));
+              break;
+            case "hexadecimal":
+              result = convertToHexadecimal(parseInt(inputValue, 10));
+              break;
+            default:
+              result = inputValue;
+              break;
+          }
+        } else if (fromNumberSystem === "binary") {
+          var decimalValue = parseInt(inputValue, 2);
+          switch (toNumberSystem) {
+            case "decimal":
+              result = decimalValue;
+              break;
+            case "octal":
+              result = decimalValue.toString(8);
+              break;
+            case "hexadecimal":
+              result = decimalValue.toString(16).toUpperCase();
+              break;
+            default:
+              result = inputValue;
+              break;
+          }
+        } else if (fromNumberSystem === "octal") {
+          var decimalValue = parseInt(inputValue, 8);
+          switch (toNumberSystem) {
+            case "decimal":
+              result = decimalValue;
+              break;
+            case "binary":
+              result = decimalValue.toString(2);
+              break;
+            case "hexadecimal":
+              result = decimalValue.toString(16).toUpperCase();
+              break;
+            default:
+              result = inputValue;
+              break;
+          }
+        } else if (fromNumberSystem === "hexadecimal") {
+          var decimalValue = parseInt(inputValue, 16);
+          switch (toNumberSystem) {
+            case "decimal":
+              result = decimalValue;
+              break;
+            case "binary":
+              result = decimalValue.toString(2);
+              break;
+            case "octal":
+              result = decimalValue.toString(8);
+              break;
+            default:
+              result = inputValue;
+              break;
+          }
+        }
+
+        document.getElementById("result").value = result;
+      }
+
+      // Number conversion functions
+      function convertToBinary(decimal) {
+        return decimal.toString(2);
+      }
+
+      function convertToOctal(decimal) {
+        return decimal.toString(8);
+      }
+
+      function convertToHexadecimal(decimal) {
+        return decimal.toString(16).toUpperCase();
+      }
+    </script>
+  </body>
+</html>
